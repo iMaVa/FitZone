@@ -38,4 +38,23 @@
 			}
 		}
     }
+
+    function getCertMed($nomeUtente) {
+        $file = fopen(__DIR__ . "/../data/abbonamentiCertificati.php","r") or die("Errore nell'apertura del file");
+		fgets($file); //salta il die
+		fgets($file); //salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			/*
+			$app[0] -> Utente
+			$app[1] -> data Abb
+			$app[2] -> data CM
+			*/
+			if($app[0] == $nomeUtente){
+				$certmed = $app[2];
+				fclose($file);
+				return $certmed;
+			}
+		}
+    }
 ?>

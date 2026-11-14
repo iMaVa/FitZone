@@ -1,3 +1,3 @@
 <?php die("accesso non consentito"); ?>
-utente | dataAbbon | dataCM
-socio|2026-11-20|2026-11-20
+utente | dataAbbon | dataCM (DATE IN UNIX TIME)
+socio|1795132800|1795447841

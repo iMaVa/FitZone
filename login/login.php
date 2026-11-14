@@ -3,9 +3,11 @@
 <html>
 	<head>
 		<title>Pagina di login</title>
+		<link rel=stylesheet href="../misc/style.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
-		<h2>FitZone</h2>
+		<h1>FitZone</h1>
 		<h3>Effettua il login per fare l'accesso alla nostra palestra</h3>
 		<?php
 		/*if(isset($_GET["err"])){
