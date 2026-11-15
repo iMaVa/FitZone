@@ -9,22 +9,18 @@
 	<body>
 		<h1>FitZone</h1>
 		<h3>Effettua il login per fare l'accesso alla nostra palestra</h3>
-		<?php
-		/*if(isset($_GET["err"])){
-			stampaErrore($_GET["err"]);
-		}*/
-		?>
-		<form name=formDiLogin action=controlloLogin.php method=post >
+		<?php if(isset($_GET["err"])) errs($_GET["err"]); ?>
+		<form name=formDiLogin action="controlloLogin.php" method=POST >
 			<div>
-				<label for=nomeUtente>Username:</label>
+				<label for=user>Username:</label>
 				<input type=text name=user id=user placeholder=digita required />
 			</div>
 			<div>
-				<label for=password>Password:</label>
+				<label for=pass>Password:</label>
 				<input type=password name=pass id=pass placeholder=digita required />
 			</div>
 			<div>
-				<input type=submit name=invia value=invia />
+				<input type=submit name=login value=invia />
 			</div>
 		</form>
 	</body>

@@ -1,11 +1,15 @@
 <?php
-if(!isset($_GET['user'])) header("location: /../login/login.php?err=102");
-require_once __DIR__ . "/../misc/funzioni.php";
-$oggi = time();
-$dataAbb = getAbbonamento($_GET['user']);
-$dataCM = getCertMed($_GET['user']);
-$diffAbb = ($dataAbb - $oggi);
-$diffCM = ($dataCM - $oggi);
+	if(!isset($_GET['user'])) {
+		header("location: /../login/login.php?err=102");
+		die();
+	}
+
+	require_once __DIR__ . "/../misc/funzioni.php";
+	$oggi = time();
+	$dataAbb = getAbbonamento($_GET['user']);
+	$dataCM = getCertMed($_GET['user']);
+	$diffAbb = ($dataAbb - $oggi);
+	$diffCM = ($dataCM - $oggi);
 ?>
 
 <!DOCTYPE html>
@@ -31,10 +35,10 @@ $diffCM = ($dataCM - $oggi);
 							if($diffAbb <= 0) {
 								echo "<th class=scaduto >";
 								echo $data;
-							}elseif($diffAbb <= 604800 && $diffAbb > 0) {
+							} elseif($diffAbb <= 604800 && $diffAbb > 0) { // se la data sta tra una settimana e 0 secondi
 								echo "<th class=quasi-scaduto >";
 								echo $data;
-							}else {
+							} else {
 								echo "<th class=valido >";
 								echo $data;
 							}

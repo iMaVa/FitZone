@@ -1,5 +1,80 @@
 <?php	
-    function getRuolo($nomeUtente, $password){
+
+	function errs($err) {
+		echo "<p class=scaduto >"; // uso class scaduto perchè cambia solo il testo a rosso :P, spero che non confodiate
+		switch($err) {
+			case 101:
+				echo "Credenziali errate";
+				break;
+			case 102:
+				echo "Errore di accesso";
+				break;
+			case 103: // per segreteria e admin
+				echo "Password non corrispondono";
+				break;
+			case 104: // per segreteria e admin
+				echo "Password troppo corta";
+				break;
+			case 201:
+				echo "Socio non trovato/selezionato";
+				break;
+			case 202:
+				echo "Data inizio non valida o mancante";
+				break;
+			case 203:
+				echo "Tipo di abbonamento non scelto";
+				break;
+			case 301:
+				echo "Corso completo (posti massimi raggiunti)";
+				break;
+			case 302:
+				echo "Socio già iscritto a questo corso";
+				break;
+			case 303:
+				echo "Certificato medico/abbonamento scaduto";
+				break;
+			case 401: // non dovrebbe mai succedere, preghiamo 🙏🏽
+				echo "Impossibile accedere al file di dati";
+				break;
+			case 402:
+				echo "Nessuna scadenza rivelata nei prossimi 30 giorni";
+				break;
+			case 501: 
+				echo "Accesso negato"; 
+				break;
+				/* ho notato che ci siamo dimenticati di fare il controllo dei ruoli
+				quindi dobbiamo ricordarci poi di implementare il controlle dei ruoli, così soci non vanno a 
+				toccare dove non dovrebbero toccare */
+			default:
+				echo "Errore anomalo";
+				break;
+		} 
+		echo "</p>";
+	}
+
+	function redirectaSegretario($redirect, $user){
+		if($redirect == "inserisciSocio"){
+			header("location: ../aree/inserisciSocio.php?accesso=1"); // che cazzo è accesso??
+			die();
+		}
+		if($redirect == "eliminaSocio"){
+			header("location:eliminaSocio.php?accesso=1");
+			die();
+		}
+		if($redirect == "scadenzaCM"){
+			header("location:scadenzaCMeAB.php?accesso=1");
+			die();
+		}
+		if($redirect == "aggiorna"){
+			header("location:aggiornaCFeAB.php?accesso=1");
+			die();
+		}
+		
+	}
+
+	// sarà da fare una funzione getUtenti, vedi un po' te, sennò vedo di farla io
+
+    function getRuolo($user, $pass){
 		$file = fopen(__DIR__ . "/../data/utenti.php","r") or die("Errore nell'apertura del file");
 		fgets($file); //salta il die
 		fgets($file); //salta intestazione record
@@ -10,7 +85,7 @@
 			$app[1] -> Password
 			$app[2] -> ruolo
 			*/
-			if($app[0] == $nomeUtente && $app[1] == $password){
+			if($app[0] == $user && $app[1] == $pass){
 				$ruolo = $app[2];
 				fclose($file);
 				return $ruolo;
@@ -20,7 +95,7 @@
 		return -1;
 	}
 
-    function getAbbonamento($nomeUtente) {
+    function getAbbonamento($user) {
         $file = fopen(__DIR__ . "/../data/abbonamentiCertificati.php","r") or die("Errore nell'apertura del file");
 		fgets($file); //salta il die
 		fgets($file); //salta intestazione record
@@ -31,7 +106,7 @@
 			$app[1] -> data Abb
 			$app[2] -> data CM
 			*/
-			if($app[0] == $nomeUtente){
+			if($app[0] == $user){
 				$abbonamento = $app[1];
 				fclose($file);
 				return $abbonamento;
@@ -39,7 +114,7 @@
 		}
     }
 
-    function getCertMed($nomeUtente) {
+    function getCertMed($user) {
         $file = fopen(__DIR__ . "/../data/abbonamentiCertificati.php","r") or die("Errore nell'apertura del file");
 		fgets($file); //salta il die
 		fgets($file); //salta intestazione record
@@ -50,7 +125,7 @@
 			$app[1] -> data Abb
 			$app[2] -> data CM
 			*/
-			if($app[0] == $nomeUtente){
+			if($app[0] == $user){
 				$certmed = $app[2];
 				fclose($file);
 				return $certmed;

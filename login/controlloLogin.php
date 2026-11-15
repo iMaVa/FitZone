@@ -1,35 +1,35 @@
 <?php
 	//var_dump($_POST);
-	if(!isSet($_POST["invia"])){
-		header("location:login.php?err=2");
+	if(!isSet($_POST["login"])){
+		header("location:login.php?err=102");
 		die();
 	}
 	
 	require_once __DIR__ . "/../misc/funzioni.php";
 	
-	$nomeUtente = trim(($_POST["user"]));
-	$password = md5(trim($_POST["pass"]));
-	
-	$ruolo = getRuolo($nomeUtente, $password);
+	$user = trim(($_POST["user"]));
+	$pass = md5(trim($_POST["pass"]));
+
+	$ruolo = getRuolo($user, $pass);
 	
 	switch($ruolo){
 		case 0:
-			header("location:homeAdmin.php?user=$nomeUtente");
+			header("location: ../aree/homeAdmin.php?user=$user");
 			break;
 		case 1:
-			header("location:homeSegretario.php?user=$nomeUtente");
+			header("location: ../aree/homeSegretario.php?user=$user");
 			break;
 		case 2:
-			header("location:homeIstruttore.php?user=$nomeUtente");
+			header("location: ../aree/homeIstruttore.php?user=$user");
 			break;
 		case 3:
-			header("location: ../aree/homeSocio.php?user=$nomeUtente");
+			header("location: ../aree/homeSocio.php?user=$user");
 			break;
 		case -1:
-			header("location:login.php?err=1");
+			header("location: ../login/login.php?err=101");
 			break;
 		default:
-			header("location:login.php?err=4");
+			header("location: ../login/login.php?err=default");
 			break;
 	}
 	
