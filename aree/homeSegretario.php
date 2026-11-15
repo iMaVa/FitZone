@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 	<body>
-		<form name=formSegretario action=controlloSceltaSegretario.php method=post >
+		<form name=formSegretario action="../check/controlloSceltaSegretario.php" method=post >
 			<?php
 				if(isset($_GET["nomeUtente"])){
 					$nomeUtente = $_GET["nomeUtente"];
@@ -24,6 +24,7 @@
 			?>
 			<h2>Effettua una scelta</h2>
 			<input type=hidden name=user value=<?php echo $_GET['user'] ?> />
+			<?php if(isSet($_GET['err'])) errs($_GET['err']); ?>
 			<div>
 				<input type=radio name=gestisci value=soci id=gestisciSoci checked />
 				<label for=gestisciSoci>Getisci soci</label>

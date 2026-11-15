@@ -5,6 +5,7 @@
 	}
 
 	require_once __DIR__ . "/../misc/funzioni.php";
+	
 	$oggi = time();
 	$dataAbb = getAbbonamento($_GET['user']);
 	$dataCM = getCertMed($_GET['user']);
