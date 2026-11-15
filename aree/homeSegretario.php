@@ -1,6 +1,6 @@
 <?php 
 	if(!isset($_GET['user'])) {
-		header("location: /../login/login.php?err=102");
+		header("location: ../login/login.php?err=102");
 		die();
 	}
 

@@ -4,11 +4,6 @@
 		die();
 	}
 
-	if(!isset($_GET["accesso"])){
-		header("location: /../login/login.php?err=501");
-		die();
-	}
-
 	require_once __DIR__ . "/../misc/funzioni.php";
 ?>
 <!DOCTYPE html>

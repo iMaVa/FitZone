@@ -33,6 +33,9 @@
 			case 303:
 				echo "Certificato medico/abbonamento scaduto";
 				break;
+			case 304:
+				echo "Corso già esistente";
+				break;
 			case 401: // non dovrebbe mai succedere, preghiamo 🙏🏽
 				echo "Impossibile accedere al file di dati";
 				break;
@@ -132,4 +135,76 @@
 			}
 		}
     }
+
+	function getUtenti(){
+		$file = fopen(__DIR__ . "/../data/utenti.php","r") or die("Errore nell'apertura del file");
+		$utenti = array();
+		fgets($file); //salta il die
+		fgets($file); //salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			$utenti[] = $app[0];
+		}
+		fclose($file);
+		return $utenti;
+	}
+	
+	function getSoci(){
+		$file = fopen(__DIR__ . "/../data/utenti.php", "r") or die("Errore nell'apertura del file");
+		$soci = array();
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if(isset($app[2]) && trim($app[2]) == "3"){
+				$soci[] = $app[0];
+			}
+		}
+		
+		fclose($file);
+		return $soci;
+	}
+
+	function getIstruttori(){
+		$file = fopen(__DIR__ . "/../data/utenti.php", "r") or die("Errore nell'apertura del file");
+		$istruttori = array();
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if(isset($app[2]) && trim($app[2]) == "2"){
+				$istruttori[] = $app[0];
+			}
+		}
+		
+		fclose($file);
+		return $istruttori;
+	}
+
+	function esisteCorso($nomeCorso){
+		$file = fopen(__DIR__ . "/../data/corsi.php", "r") or die("Errore nell'apertura del file");
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if(trim($app[1]) == trim($nomeCorso)){
+				fclose($file);
+				return true;
+			}
+		}
+		fclose($file);
+		return false;
+	}
+
+	function inserisciCorso($istruttore, $nomeCorso, $dataCorso, $durataCorso ){
+		if(esisteCorso($nomeCorso)){
+			return false;
+		}
+		$file = fopen(__DIR__ . "/../data/corsi.php", "a") or die("Errore nell'apertura del file");
+		//istruttore|nome|data|durata
+		$riga = "\n" . trim($istruttore) . "|" . trim($nomeCorso) . "|" . trim($dataCorso) . "|" . trim($durataCorso);
+		fwrite($file, $riga);
+		fclose($file);
+		return true;
+	}
 ?>

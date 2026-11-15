@@ -15,10 +15,10 @@
 	$user = $_POST['user']; // fra ti sei dimenticato di mettere su tutte le pagine il type=hidden con l'user
 	
 	if($scelta == "soci"){
-		header("location: ../aree/gestisciSoci.php?user=$user&accesso=1");
+		header("location: ../aree/gestisciSoci.php?user=$user");
 		die();
 	}elseif($scelta == "corsi"){
-		header("location:../aree/gestisciCorsi.php?user=$user&accesso=2");
+		header("location:../aree/gestisciCorsi.php?user=$user");
 		die();
 	} else {
 		header("location: ../aree/homeSocio.php?user=$user&err=default");
