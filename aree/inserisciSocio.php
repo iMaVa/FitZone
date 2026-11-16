@@ -5,6 +5,8 @@
 	}
 
 	require_once __DIR__ . "/../misc/funzioni.php";
+
+	$user = $_GET['user'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,7 @@
         <title>Inserizione Socio - Segreteria</title>
         <link rel=stylesheet href="../misc/style.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
     </head>
 	<body>
 		<form name=formInserimentoSocio action=controlloGestioneSoci.php method=post >
@@ -38,6 +41,10 @@
 				<input type=submit name=inserisci value=inserisci />
 			</div>
 		<form>
+
+		<div id=footer>
+			<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">TORNA ALLA GESTIONE SOCI</a> 
+		</div>
 	</body>
 </html>
 

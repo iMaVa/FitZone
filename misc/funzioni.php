@@ -57,22 +57,21 @@
 
 	function redirectaSegretario($redirect, $user){
 		if($redirect == "inserisciSocio"){
-			header("location: ../aree/inserisciSocio.php?accesso=1"); // che cazzo è accesso??
+			header("location: ../aree/inserisciSocio.php?user=$user"); 
 			die();
 		}
 		if($redirect == "eliminaSocio"){
-			header("location:eliminaSocio.php?accesso=1");
+			header("location: ../aree/eliminaSocio.php?user=$user");
 			die();
 		}
 		if($redirect == "scadenzaCM"){
-			header("location:scadenzaCMeAB.php?accesso=1");
+			header("location: ../aree/scadenzaCMeAB.php?user=$user");
 			die();
 		}
 		if($redirect == "aggiorna"){
-			header("location:aggiornaCFeAB.php?accesso=1");
+			header("location: ../aree/aggiornaCFeAB.php?user=$user");
 			die();
 		}
-		
 	}
 
 	// sarà da fare una funzione getUtenti, vedi un po' te, sennò vedo di farla io
@@ -163,6 +162,98 @@
 		
 		fclose($file);
 		return $soci;
+	}
+
+	function esisteUtente($nomeUtente){
+		$file = fopen(__DIR__ . "/../data/utenti.php", "r") or die("Errore nell'apertura del file");
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if(trim($app[0]) == trim($nomeUtente)){
+				fclose($file);
+				return true;
+			}
+		}
+		fclose($file);
+		return false;
+	}
+
+	function inserisciUtente($nomeUtente, $password, $ruolo){
+		if(esisteUtente($nomeUtente)){
+			return false;
+		}
+		$file = fopen(__DIR__ . "/../data/utenti.php", "a") or die("Errore nell'apertura del file");
+		$passHash = md5($password);
+		//utente|password|ruolo
+		$riga = "\n" . trim($nomeUtente) . "|" . $passHash . "|" . trim($ruolo);
+		fwrite($file, $riga);
+		fclose($file);
+		return true;
+	}
+	
+	function eliminaSocio($nomeSocio){
+		if(!esisteUtente($nomeSocio)){
+			return false;
+		}
+		
+		$file = fopen(__DIR__ . "/../data/utenti.php", "r") or die("Errore nell'apertura del file");
+		$righe = array();
+		$trovato = false;
+		$righe[] = trim(fgets($file)); // salva il die
+		$righe[] = trim(fgets($file)); // salva intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if($app[0] == $nomeSocio && $app[2] == "3"){
+				$trovato = true;
+			} else {
+				$righe[] = $riga;
+			}
+		}
+		fclose($file);
+		
+		if($trovato){
+			$file = fopen(__DIR__ . "/../data/utenti.php", "w") or die("Errore nell'apertura del file");
+			fwrite($file, implode("\n", $righe));
+			fclose($file);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function aggiornaCFeAB($nomeSocio, $dataAbb, $dataCM){
+		$percorso = __DIR__ . "/../data/abbonamentiCertificati.php";
+		$file = fopen($percorso, "r") or die("Errore nell'apertura del file");
+		
+		$righe = array();
+		$trovato = false;
+		
+		$righe[] = trim(fgets($file)); // salva il die
+		$righe[] = trim(fgets($file)); // salva intestazione record
+		
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if($app[0] == $nomeSocio){
+				$trovato = true;
+				$abb = ($dataAbb != "") ? strtotime($dataAbb) : $app[1];
+				$cm = ($dataCM != "") ? strtotime($dataCM) : $app[2];
+				$righe[] = "$nomeSocio|$abb|$cm";
+			} else {
+				$righe[] = $riga;
+			}
+		}
+		fclose($file);
+		
+		if(!$trovato){
+			$abb = ($dataAbb != "") ? strtotime($dataAbb) : 0;
+			$cm = ($dataCM != "") ? strtotime($dataCM) : 0;
+			$righe[] = "$nomeSocio|$abb|$cm";
+		}
+		
+		$file = fopen($percorso, "w") or die("Errore nell'apertura del file");
+		fwrite($file, implode("\n", $righe));
+		fclose($file);
 	}
 
 	function getIstruttori(){

@@ -19,6 +19,7 @@
 		<title>Home - Socio</title>
 		<link rel=stylesheet href="../misc/style.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
 	</head>
 	
 	<body>

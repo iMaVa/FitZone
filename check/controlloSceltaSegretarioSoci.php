@@ -1,11 +1,11 @@
 <?php
 	if(!isset($_POST["user"])){
-		header("location: /../login/login.php?err=102");
+		header("location: ../login/login.php?err=102");
         die();
 	}
 
 	if(!isset($_POST["procedi"])){
-		header("location: /../login/login.php?err=102");
+		header("location: ../login/login.php?err=102");
 		die();
 	}
 
@@ -13,7 +13,6 @@
 
 	var_dump($_POST);
 	
-	require_once "funzioni.php";
 	
 	$redirect = $_POST["gestione"];
 	$user = $_POST["user"];
