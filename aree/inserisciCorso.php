@@ -20,7 +20,7 @@
     <body>
         <h1>Nuovo corso</h1>
         <h3>Compilare tutti i campi per creare un nuovo corso</h3>
-        <form action="../check/inserisciCorsoControllo.php" method=POST>
+        <form action="../check/controlloInserisciCorso.php" method=POST>
             <input type=hidden name=user value=<?php echo $_GET['user'] ?> />
             <div>
                 <label for=listaIstruttori>Seleziona l'istruttore del corso: </label>
@@ -37,7 +37,7 @@
             </div>
             <div>
                 <label for=dataCorso>Inserisci la data del corso: </label>
-                <input type=date name=dataCorso min="<?php echo date("Y-m-d") ?>" required />
+                <input type=date name=dataCorso min="<?php echo date("Y-m-d") ?>" value="<?php echo date("Y-m-d"); ?>"  required />
             </div>
             <div>
                 <label for=durataCorso>Inserisci la durata del corso: </label>
@@ -49,7 +49,7 @@
         </form>
         <?php 
             if(isset($_GET['err'])) errs($_GET['err']);
-            if(isset($_GET['succ'])) echo "<p class=valido>Corso inserito con successo</p>";
+            if(isset($_GET['ok'])) echo "<p class=valido>Corso inserito con successo</p>";
         ?>
         <div id=footer>
             <a href="gestisciCorsi.php?user=<?php echo $_GET['user'] ?>">Torna alla gestione dei corsi</a>

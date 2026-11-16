@@ -36,6 +36,9 @@
 			case 304:
 				echo "Corso già esistente";
 				break;
+			case 305:
+				echo "Corso non esistente"; // non dovrebbe mai succedere asw
+				break;
 			case 401: // non dovrebbe mai succedere, preghiamo 🙏🏽
 				echo "Impossibile accedere al file di dati";
 				break;
@@ -75,6 +78,7 @@
 	}
 
 	// sarà da fare una funzione getUtenti, vedi un po' te, sennò vedo di farla io
+	// easy
 
     function getRuolo($user, $pass){
 		$file = fopen(__DIR__ . "/../data/utenti.php","r") or die("Errore nell'apertura del file");
@@ -272,6 +276,20 @@
 		return $istruttori;
 	}
 
+	function getCorsi(){
+		$file = fopen(__DIR__ . "/../data/corsi.php", "r") or die("Errore nell'apertura del file");
+		$corsi = array();
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			$corsi[] = $app[1];
+		}
+		
+		fclose($file);
+		return $corsi;
+	}
+
 	function esisteCorso($nomeCorso){
 		$file = fopen(__DIR__ . "/../data/corsi.php", "r") or die("Errore nell'apertura del file");
 		fgets($file); // salta il die
@@ -287,15 +305,100 @@
 		return false;
 	}
 
-	function inserisciCorso($istruttore, $nomeCorso, $dataCorso, $durataCorso ){
-		if(esisteCorso($nomeCorso)){
-			return false;
-		}
+	function inserisciCorso($istruttore, $nomeCorso, $dataCorso, $durataCorso){
+		if(esisteCorso($nomeCorso)) return false;
+
+		// non parlo il cecconese quindi questo è full freestyle. NON risponderò a domande
+
+		$percorso = __DIR__ . "/../data/listaCorsi/$nomeCorso.php";
+		$nuovoFile = fopen($percorso, 'a');
+		if($nuovoFile === false) return false; // inshallah non succederà mai
+		// ^ meglio triplo === perchè se creano un corso chiamato "false" siamo cucinati
+		$topping = /* non so come chiamare sta variabile scusate */ "<?php die('Accesso non consentito'); ?>\nDATAunix | UTENTE_1 | assOpres_U1 | UTENTE_2 | assOpres_U2 | etc.\n$dataCorso|";
+		// ^^^ mi divertirò a vedervi provare a programmare questa schifezza per l'istruttore
+		fwrite($nuovoFile, $topping);
+		fclose($nuovoFile);
+
 		$file = fopen(__DIR__ . "/../data/corsi.php", "a") or die("Errore nell'apertura del file");
 		//istruttore|nome|data|durata
 		$riga = "\n" . trim($istruttore) . "|" . trim($nomeCorso) . "|" . trim($dataCorso) . "|" . trim($durataCorso);
 		fwrite($file, $riga);
 		fclose($file);
+
 		return true;
+	}
+
+	function aggiornaDataCorso($nomeCorso, $dataUnix) {
+
+		$nomeCorso = trim($nomeCorso);
+		$file = fopen(__DIR__ . "/../data/corsi.php", "r");
+
+		if($file === false) return false;
+
+		$righe = array();
+
+		$righe[] = trim(fgets($file));
+		$righe[] = trim(fgets($file));
+		$flag = false;
+
+		while (($riga = fgets($file)) !== false) {
+			$riga = trim($riga);
+			$campi = explode("|", $riga);
+
+			if(isset($campi[1], $campi[2]) && trim($campi[1]) === $nomeCorso) {
+				$campi[2] = (string) $dataUnix;
+				$riga = implode("|", $campi);
+				$flag = true;
+			}
+
+			$righe[] = $riga;
+		}
+
+		fclose($file);
+
+		if(!$flag) return false;
+
+		$fileLista = fopen(__DIR__ . "/../data/listaCorsi/" . $nomeCorso . ".php", "r");
+
+		if($fileLista === false) return false;
+
+		$righeLista = array();
+
+		$righeLista[] = trim(fgets($fileLista));
+		$righeLista[] = trim(fgets($fileLista));
+		$dataTrovata = false;
+
+		while (($rigaLista = fgets($fileLista)) !== false) {
+			$rigaLista = trim($rigaLista);
+
+			if(!$dataTrovata && $rigaLista !== "") {
+				$campiLista = explode("|", $rigaLista);
+				$campiLista[0] = (string) $dataUnix;
+				$rigaLista = implode("|", $campiLista);
+				$dataTrovata = true;
+			}
+
+			$righeLista[] = $rigaLista;
+		}
+
+		fclose($fileLista);
+
+		if(!$dataTrovata) return false;
+
+		$fileLista = fopen(__DIR__ . "/../data/listaCorsi/" . $nomeCorso . ".php", "w");
+		if($fileLista === false) return false;
+
+		$scrittoLista = fwrite($fileLista, implode("\n", $righeLista));
+		fclose($fileLista);
+
+		if($scrittoLista === false) return false;
+
+		$file = fopen(__DIR__ . "/../data/corsi.php", "w");
+		if($file === false) return false;
+
+		$scritto = fwrite($file, implode("\n", $righe));
+		fclose($file);
+
+		return $scritto !== false;
 	}
 ?>

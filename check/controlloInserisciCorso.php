@@ -1,11 +1,11 @@
 <?php 
     if(!isset($_POST["user"])){
-		header("location: /../login/login.php?err=102");
+		header("location: ../login/login.php?err=102");
         die();
 	}
 
 	if(!isset($_POST["inserisciCorso"])){
-		header("location: /../login/login.php?err=102");
+		header("location: ../login/login.php?err=102");
 		die();
 	}
 
@@ -21,7 +21,7 @@
     $durata = $_POST['durataCorso'];
 
     if(inserisciCorso($istruttore, $nomeCorso, $dataUnix,$durata)) {
-        header("location: ../aree/inserisciCorso.php?user=$user&succ=1");
+        header("location: ../aree/inserisciCorso.php?user=$user&ok=1");
         die();
     } else {
         header("location: ../aree/inserisciCorso.php?user=$user&err=304");

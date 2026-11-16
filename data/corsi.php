@@ -1,3 +1,4 @@
 <?php die("Accesso non consentito"); ?>
 ISTRUTTORE | NOME | DATA | DURATA
-istruttore|Pilates|1795651200|45
+MarioIstruttore|Boh|1795651200|30
+istruttore|Danza|1795910400|39

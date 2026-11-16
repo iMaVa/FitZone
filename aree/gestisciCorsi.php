@@ -16,21 +16,26 @@
     </head>
 	<body>
 		<h1>Gestione corsi</h1>
-		<h3>Seleziona se vuoi aggiungere o eliminare un corso</h3>
+		<h3>Seleziona se vuoi aggiungere, aggiornare o eliminare un corso</h3>
 		<form name=formGestioneSoci action="../check/controlloSceltaSegretarioCorsi.php" method=POST >
-			<?php if(isset($_GET['err'])) errs($_GET['err']) ?>
 			<div>
 				<input type=radio name=opzioniCorsi value=inserisciCorso checked />
 				<label for=inserisciCorso>Inserisci un nuovo corso</label>
 			</div>
 			<div>
-				<input type=radio name=opzioniCorsi value=eliminaCorso  />
+				<input type=radio name=opzioniCorsi value=aggiornaCorso  />
+				<label for=aggiornaCorso>Aggiorna la data di un corso</label>
+			</div>
+			<div>
+				<input type=radio name=opzioniCorsi value=eliminaCorso />
 				<label for=eliminaCorso>Elimina un corso esistente</label>
 			</div>
+			
 			<div>
 				<input type=submit name=procedi value=Invia />
 			</div>
 			<input type=hidden name=user value=<?php echo $_GET['user'] ?> />
+			<?php if(isset($_GET['err'])) errs($_GET['err']) ?>
 		<form>
 		<div id=footer>
 			<a href="homeSegretario.php?user=<?php echo $_GET["user"] ?>">Torna alla Home Segreteria</a>
