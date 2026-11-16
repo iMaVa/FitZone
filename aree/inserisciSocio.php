@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <title>Inserizione Socio - Segreteria</title>
+        <title>Inserizione Socio</title>
         <link rel=stylesheet href="../misc/style.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
@@ -46,7 +46,8 @@
 		<form>
 
 		<div id=footer>
-			<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">TORNA ALLA GESTIONE SOCI</a> 
+			<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">Torna alla gestione soci</a> 
+			<a href="../login/login.php">Log Out</a>
 		</div>
 	</body>
 </html>

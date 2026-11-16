@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <title>Gestione Corsi - Segreteria</title>
+        <title>Gestione Corsi</title>
         <link rel=stylesheet href="../misc/style.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
@@ -38,7 +38,8 @@
 			<?php if(isset($_GET['err'])) errs($_GET['err']) ?>
 		<form>
 		<div id=footer>
-			<a href="homeSegretario.php?user=<?php echo $_GET["user"] ?>">Torna alla Home Segreteria</a>
+			<a href="homeSegretario.php?user=<?php echo $_GET["user"] ?>">Torna alla Home</a>
+			<a href="../login/login.php">Log Out</a>
 		</div>
 	</body>
 </html>

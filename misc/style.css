@@ -6,6 +6,7 @@ html {
 h1 {
 	font-size: 70px;
 	text-align: center;
+	color: #084182;
 }
 
 #footer {
@@ -35,6 +36,20 @@ th {
 	border: 2px solid black;
 }
 
+body {
+	background-color: #d6eaf8;
+}
+
+.riquadro {
+	background-color: white;
+	border: 2px solid #084182;
+	border-radius: 10px;
+	width: 350px;
+	margin: 30px auto;
+	padding: 20px;
+	text-align: center;
+}
+
 .valido {
 	color: green;
 }
@@ -45,4 +60,18 @@ th {
 
 .scaduto {
 	color: red;
+}
+
+.titolo-con-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px; /*fa lo spazio tra il logo e il testo*/
+}
+
+.logo-piccolo {
+	width: 75px;
+	height: 75px;
+	border-radius: 50%; /*mantiene la forma perfettamente circolare*/
+	object-fit: cover;
 }

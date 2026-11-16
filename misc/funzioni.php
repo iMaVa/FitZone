@@ -2,6 +2,8 @@
 
 	function errs($err) {
 		echo "<p class=scaduto >"; // uso class scaduto perchè cambia solo il testo a rosso :P, spero che non confodiate
+		// Valerio non fare mistakes quando scrivi è confoNdiate non confodiate 😞 , poi prendi bei voti sui temi
+		// va bene bro
 		switch($err) {
 			case 101:
 				echo "Credenziali errate";
@@ -78,7 +80,7 @@
 	}
 
 	// sarà da fare una funzione getUtenti, vedi un po' te, sennò vedo di farla io
-	// easy
+	// easy fatta
 
     function getRuolo($user, $pass){
 		$file = fopen(__DIR__ . "/../data/utenti.php","r") or die("Errore nell'apertura del file");
@@ -397,6 +399,67 @@
 		if($file === false) return false;
 
 		$scritto = fwrite($file, implode("\n", $righe));
+		fclose($file);
+
+		return $scritto !== false;
+	}
+
+	function getRuoloUtente($nomeUtente){
+		$file = fopen(__DIR__ . "/../data/utenti.php", "r") or die("Errore nell'apertura del file");
+		fgets($file); // salta il die
+		fgets($file); // salta intestazione record
+		while($riga = trim(fgets($file))){
+			$app = explode("|", $riga);
+			if(isset($app[0]) && trim($app[0]) == trim($nomeUtente)){
+				$codice = trim($app[2]);
+				fclose($file);
+				switch($codice){
+					case "0": return "Admin";
+					case "1": return "Segretario";
+					case "2": return "Istruttore";
+					case "3": return "Socio";
+					default: return "Sconosciuto";
+				}
+			}
+		}
+		fclose($file);
+		return "Non trovato";
+	}
+
+	function eliminaCorso($nomeCorso) {
+
+		$file = fopen(__DIR__ . "/../data/corsi.php", "r");
+
+		if($file === false) return false; 
+		// ricordate che usiamo l'identità così un corso chiamato "false" o "0" non manda tutto a troie
+
+		$righe = array();
+
+		$righe[] = trim(fgets($file));
+		$righe[] = trim(fgets($file));
+		$corsoTrovato = false;
+
+		while(($riga = fgets($file)) !== false) {
+			$riga = trim($riga);
+			$campi = explode("|", $riga);
+
+			if(isset($campi[1]) && trim($campi[1]) == $nomeCorso) {
+				$corsoTrovato = true;
+			} else {
+				$righe[] = $riga;
+			}
+		}
+
+		fclose($file);
+
+		if(!$corsoTrovato) return false;
+
+		$fileCorso = __DIR__ . "/../data/listaCorsi/" . $nomeCorso . ".php";
+		if(!is_file($fileCorso) || !unlink($fileCorso)) return false;
+		$file = fopen(__DIR__ . "/../data/corsi.php", "w");
+		if($file === false) return false;
+
+		$scritto = fwrite($file, implode("\n", $righe) . "\n");
 		fclose($file);
 
 		return $scritto !== false;

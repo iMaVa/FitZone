@@ -14,13 +14,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Controllo Scadenze - Segreteria</title>
+		<title>Controllo Scadenze</title>
 		<link rel=stylesheet href="../misc/style.css" >
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
 	</head>
 	<body>
-		<form name=formSegretario action="../check/scadenzaCFeABControlla.php" method=post >
+		<form name=formSegretario action="../check/controlloScadenzaCFeAB.php" method=post >
 			<h2>Controlla le varie scadenze</h2>
 			<input type=hidden name=user value="<?php echo $user; ?>" />
 			<?php if(isset($_GET['err'])) errs($_GET['err']); ?>
@@ -36,7 +36,7 @@
 				</select>
 			</div>
 			<div>
-				<input type=submit name=controlla value=controllo />
+				<input type=submit name=controlla value=controllo <?php echo empty($soci) ? "disabled" : "" ?>/>
 			</div>
 		</form>
 
@@ -103,7 +103,8 @@
 			}
 		?>
 		<div id=footer>
-			<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">TORNA ALLA GESTIONE SOCI</a> 
+			<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">Torna alla gestione soci</a> 
+			<a href="../login/login.php">Log Out</a>
 		</div>
 	</body>
 </html>

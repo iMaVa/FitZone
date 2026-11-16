@@ -13,13 +13,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Aggiorna Certificato e Abbonamento - Segreteria</title>
+		<title>Aggiorna Certificato e Abbonamento</title>
 		<link rel=stylesheet href="../misc/style.css" >
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
 	</head>
 	<body>
-		<form name=formAggiorna action="../check/aggiornaCFeABControlla.php" method=post >
+		<form name=formAggiorna action="../check/controlloAggiornaCFeAB.php" method=post >
 			<h2>Aggiorna Abbonamento e Certificato Medico</h2>
 			<input type=hidden name=user value="<?php echo $user; ?>" />
 			
@@ -54,11 +54,12 @@
 			</div>
 
 			<div>
-				<input type=submit name=invia value="INVIA" />
+				<input type=submit name=invia value="INVIA" <?php echo empty($soci) ? "disabled" : "" ?> />
 			</div>
 
 			<div id=footer>
-				<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">TORNA ALLA GESTIONE SOCI</a> 
+				<a href="../aree/gestisciSoci.php?user=<?php echo $user; ?>">Torna alla gestione soci</a> 
+				<a href="../login/login.php">Log Out</a>
 			</div>
 		</form>
 	</body>

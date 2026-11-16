@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <title>Home - Segreteria</title>
+        <title>Home - Segretario</title>
         <link rel=stylesheet href="../misc/style.css" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
@@ -38,5 +38,8 @@
 				<input type=submit name=continua value=continua />
 			</div>
 		<form>
+		<div id=footer>
+			<a href="../login/login.php">Log Out</a>
+		</div>
 	</body>
 </html>

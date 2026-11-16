@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-		<title>Aggiornamento Corso - Istruttore</title>
+		<title>Aggiornamento Corso</title>
 		<link rel=stylesheet href="../misc/style.css" >
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="../misc/icon.png" type="image/jpeg">
@@ -38,7 +38,7 @@
                 <input type=date name=nuovaDataCorso min="<?php echo date("Y-m-d") ?>" value="<?php echo date("Y-m-d"); ?>" required />
             </div>
             <div>
-                <input type=submit name=aggiornaCorso value=Inserisci />
+                <input type=submit name=aggiornaCorso value=Inserisci <?php echo empty($corsi) ? "disabled" : "" ?> />
             </div>
         </form>
         <?php 
@@ -47,6 +47,7 @@
         ?>
         <div id=footer>
             <a href="gestisciCorsi.php?user=<?php echo $_GET['user'] ?>">Torna alla gestione dei corsi</a>
+            <a href="../login/login.php">Log Out</a>
         </div>
     </body>
 </html>
